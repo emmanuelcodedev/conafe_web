@@ -6,6 +6,10 @@
 
 {% block content %}
 <div class="container mt-5">
+    <div class="d-flex justify-content-start mb-3">
+        <a href="{% url 'dot_home:home_dot' %}" class="btn btn-warning" style="background-color: #620b0b; color:white" >Menu</a>
+    </div>
+
     <h2 class="text-center mb-4">Lista de Empleados</h2>
 
     {% if empleados %}
@@ -68,4 +72,5 @@
     }
 </script>
 {% endblock %}
+
 

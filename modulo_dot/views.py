@@ -85,3 +85,53 @@ def dashboard_view(request):
 def detalles_empleado(request, empleado_id):
     empleado = get_object_or_404(Empleado, id=empleado_id)
     return render(request, 'home_dot/detalles_empleado.html', {'empleado': empleado})
+
+
+@login_required
+@role_required('DOT')  # Asegúrate de que solo los usuarios con este rol puedan acceder
+def modificar_dashboard(request):
+    empleados = Empleado.objects.all()  # Obtener todos los empleados desde la base de datos
+    return render(request, 'home_dot/dashboard_modificar.html', {'empleados': empleados})  # Pasa los empleados al contexto
+
+
+@login_required
+@role_required('DOT')
+def modificar_empleado(request, empleado_id):
+    empleado = get_object_or_404(Empleado, id=empleado_id)
+    usuario = empleado.usuario
+
+    if request.method == 'POST':
+        empleado.nombre = request.POST.get('nombre')
+        empleado.apellidopa = request.POST.get('apellidopa')
+        empleado.apellidoma = request.POST.get('apellidoma')
+        empleado.email = request.POST.get('email')
+        empleado.rol = request.POST.get('rol')
+        usuario.username = request.POST.get('username')
+
+        usuario.first_name = empleado.nombre
+        usuario.last_name = empleado.apellidopa
+        usuario.email = empleado.email
+        usuario.role = empleado.rol
+        usuario.username = request.POST.get('username')
+
+        password = request.POST.get('password')
+        if password:
+            usuario.set_password(password)
+            empleado.contrasenia = password
+
+        usuario.save()
+        empleado.save()
+
+        messages.success(request, 'El registro del empleado ha sido modificado correctamente.')
+        return redirect('dot_home:dashboard_modificar')
+
+    # Agregamos 'username' al contexto
+    context = {
+        'empleado': empleado,
+        'username': usuario.username,  # Incluimos el nombre de usuario actual
+    }
+    return render(request, 'home_dot/modificar_empleado.html', context)
+
+
+
+
