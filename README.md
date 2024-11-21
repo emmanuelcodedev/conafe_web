@@ -1,88 +1,55 @@
-Conafe Web
+Recomendación Adicional:
 
-    Una plataforma desarrollada en Django para la gestión de empleados, coordinadores y módulos de Conafe.
+Se recomienda usar un entorno virtual para gestionar las dependencias de manera aislada.
+Instalación y Configuración
 
-Este proyecto tiene como objetivo facilitar la gestión interna y la administración de recursos mediante una interfaz web amigable y escalable.
-📋 Requisitos Previos
+Sigue los siguientes pasos para configurar el proyecto en tu máquina local.
+Clonar el Repositorio
 
-Antes de ejecutar este proyecto, asegúrate de tener instalados los siguientes componentes:
-
-    Python 3.8 o superior
-    Virtualenv (opcional, pero recomendado para manejar entornos virtuales)
-    Git (para clonar el repositorio, si aplica)
-    Pip (gestor de paquetes para Python)
-
-🚀 Instalación y Configuración
-
-Sigue los pasos a continuación para configurar y ejecutar el proyecto en tu máquina local.
-1. Clonar el repositorio
-
-Usa el siguiente comando para clonar el proyecto en tu máquina local:
+Clona este repositorio en tu máquina local usando Git. Abre la terminal y ejecuta:
 
 git clone https://github.com/<TU-USUARIO>/<TU-REPOSITORIO>.git
-cd conafe_web
+cd <nombre-del-repositorio>
 
-2. Crear y activar un entorno virtual
+Crear y Activar un Entorno Virtual
 
-Se recomienda usar un entorno virtual para aislar las dependencias del proyecto:
+Para evitar conflictos con otras dependencias de Python, es recomendable usar un entorno virtual.
 
-En Linux/macOS:
+    En Linux/macOS:
 
 python3 -m venv env
 source env/bin/activate
 
 En Windows:
 
-python -m venv env
-env\Scripts\activate
+    python -m venv env
+    .\env\Scripts\activate
 
-3. Instalar las dependencias
+Cuando el entorno virtual esté activado, verás el nombre del entorno entre paréntesis, por ejemplo: (env).
+Instalar las Dependencias
 
-Instala las dependencias listadas en requirements.txt:
+Con el entorno virtual activado, instala las dependencias necesarias para el proyecto usando pip:
 
 pip install -r requirements.txt
 
-4. Configurar las variables de entorno
+Esto instalará todos los paquetes listados en el archivo requirements.txt, que generalmente incluye Django y otras dependencias necesarias
+Migraciones de Base de Datos
 
-Configura las variables de entorno necesarias, incluyendo la configuración de Django:
-
-export DJANGO_SETTINGS_MODULE=web_conafe.settings
-
-En Windows:
-
-set DJANGO_SETTINGS_MODULE=web_conafe.settings
-
-5. Realizar las migraciones de base de datos
-
-Configura la base de datos ejecutando las migraciones:
+Django necesita crear las tablas de la base de datos antes de que puedas usar la aplicación. Para hacerlo, ejecuta las migraciones:
 
 python manage.py migrate
 
-6. Ejecutar el servidor
+Este comando creará las tablas necesarias en la base de datos, basándose en las definiciones de los modelos de Django.
+Ejecutar el Servidor de Desarrollo
 
-Inicia el servidor de desarrollo:
+Una vez que todo esté configurado, puedes ejecutar el servidor de desarrollo de Django:
 
 python manage.py runserver
 
-Accede a la aplicación en tu navegador en: http://127.0.0.1:8000.
-🛠️ Tecnologías Utilizadas
+El servidor se iniciará en el puerto 8000 por defecto. Accede a la aplicación desde tu navegador:
 
-    Python
-    Django
-    HTML/CSS
-    JavaScript
-    Bootstrap (opcional, si lo usaste para el diseño del front-end)
+http://127.0.0.1:8000/
 
-🤝 Cómo Contribuir
 
-Si deseas contribuir a este proyecto, sigue estos pasos:
 
-    Haz un fork del repositorio.
-    Crea una nueva rama (git checkout -b feature/nueva-funcionalidad).
-    Realiza los cambios necesarios y haz un commit (git commit -m "Descripción de los cambios").
-    Envía los cambios a tu fork (git push origin feature/nueva-funcionalidad).
-    Abre un Pull Request en este repositorio.
 
- Asegúrate de activar el entorno virtual con:
-
-source env/bin/activate
