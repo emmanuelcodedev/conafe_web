@@ -1,24 +1,27 @@
-Proyecto Django - Guía de Instalación y Configuración
+# Proyecto Django - Guía de Instalación y Configuración
 
-Este proyecto está basado en Django y permite gestionar las dependencias de manera aislada usando un entorno virtual. Sigue los pasos a continuación para configurar y ejecutar el proyecto en tu máquina local.
-Requisitos
+Este proyecto está basado en Django y se recomienda usar un entorno virtual para gestionar las dependencias de manera aislada y evitar conflictos con otras bibliotecas o proyectos.
+
+## Requisitos
 
 Antes de comenzar, asegúrate de tener lo siguiente instalado:
 
-    Python 3.6+
-    Puedes descargar Python desde python.org.
+- **Python 3.6+**: Puedes descargarlo desde [python.org](https://www.python.org/downloads/).
+- **Git**: Para clonar el repositorio. Si no lo tienes, descárgalo desde [git-scm.com](https://git-scm.com/downloads).
 
-    Git
-    Asegúrate de tener Git instalado en tu sistema para poder clonar el repositorio. Si no lo tienes, puedes descargarlo desde git-scm.com.
+## Recomendación Adicional
 
-Recomendación Adicional
+Es altamente recomendable usar un **entorno virtual** para gestionar las dependencias de Python. Un entorno virtual crea un espacio aislado donde puedes instalar las dependencias necesarias para este proyecto sin afectar a otras aplicaciones en tu sistema.
 
-Es altamente recomendable usar un entorno virtual para gestionar las dependencias de Python y evitar conflictos con otras bibliotecas o proyectos. Un entorno virtual crea un espacio aislado donde puedes instalar las dependencias necesarias para este proyecto sin afectar a otras aplicaciones en tu sistema.
-Pasos para Configurar el Proyecto
-1. Clonar el Repositorio
+## Pasos para Configurar el Proyecto
+
+Sigue estos pasos para configurar el proyecto en tu máquina local.
+
+### 1. Clonar el Repositorio
 
 Clona este repositorio en tu máquina local utilizando Git. Abre la terminal o línea de comandos y ejecuta:
 
+```bash
 git clone https://github.com/tu-usuario/tu-repositorio.git
 cd tu-repositorio
 
@@ -44,7 +47,7 @@ Con el entorno virtual activado, instala las dependencias necesarias utilizando 
 
 pip install -r requirements.txt
 
-Este archivo generalmente incluye las dependencias principales del proyecto, como Django y otras librerías necesarias para su funcionamiento.
+Este archivo generalmente incluye las dependencias principales del proyecto, como Django y otras librerías necesarias.
 4. Realizar Migraciones de la Base de Datos
 
 Django requiere crear las tablas en la base de datos antes de poder usar la aplicación. Para hacerlo, ejecuta las migraciones necesarias con el siguiente comando:
@@ -69,11 +72,11 @@ Notas Adicionales
 
     Requisitos de Python: Si tienes múltiples versiones de Python instaladas, asegúrate de usar la versión correcta al crear el entorno virtual (por ejemplo, python3.8 -m venv env en lugar de python3).
 
-    Dependencias adicionales: Si necesitas instalar nuevas dependencias para el proyecto, puedes agregarlas al archivo requirements.txt y luego ejecuta pip install -r requirements.txt nuevamente.
+    Dependencias adicionales: Si necesitas instalar nuevas dependencias para el proyecto, puedes agregarlas al archivo requirements.txt y luego ejecutar pip install -r requirements.txt nuevamente.
 
 Contribuciones
 
-Si deseas contribuir a este proyecto, por favor sigue los siguientes pasos:
+Si deseas contribuir a este proyecto, por favor sigue estos pasos:
 
     Haz un fork de este repositorio.
     Crea una nueva rama (git checkout -b feature/nueva-funcionalidad).
