@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'modulo_dot',
     'home_empleado',
     'modulo_coordinador',
+    'form_app',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
