@@ -2,6 +2,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 import re
 from django import forms
+from django.core.validators import FileExtensionValidator
 
 # Función para validar el tamaño del archivo
 def validate_file_size(file):
@@ -21,6 +22,10 @@ class Aspirante(models.Model):
     apellido_materno = models.CharField(max_length=150)
     correo = models.EmailField(max_length=254)
     telefono = models.CharField(max_length=15, validators=[validate_phone_number])
+    rol = models.CharField(
+    max_length=10,
+    default='Aspirante',
+)
 
     def save(self, *args, **kwargs):
         # Asegura que solo se guarden números en el campo telefono
@@ -33,12 +38,33 @@ class Aspirante(models.Model):
     def __str__(self):
         return f"{self.nombre} {self.apellido_paterno} {self.apellido_materno}"
     
-"""
+
 class FormacionAcademica(models.Model):
-    aspirante = models.ForeignKey(Aspirante, related_name='formaciones_academicas', on_delete=models.CASCADE)
-    nivel_academico = models.CharField(max_length=150)
-    titulo_obtenido = models.CharField(max_length=255)
-    certificado_constancia = models.FileField(upload_to='documentos_academicos/', validators=[validate_file_size])
+    aspirante = models.ForeignKey(
+        'Aspirante',  # Asegúrate de tener este modelo definido
+        related_name='formaciones_academicas',
+        on_delete=models.CASCADE
+    )
+    nivel_academico = models.CharField(
+        max_length=150,
+        choices=[
+            ('Primaria', 'Primaria'),
+            ('Secundaria', 'Secundaria'),
+            ('Preparatoria', 'Preparatoria'),
+            ('Licenciatura', 'Licenciatura'),
+            ('Maestría', 'Maestría'),
+            ('Doctorado', 'Doctorado'),
+        ],  # Opciones desplegables
+        default='Primaria'
+    )
+    habla_lengua_indigena = models.BooleanField(default=False)  # Sí/No
+    certificado_constancia = models.FileField(
+        upload_to='documentos_academicos/',
+        validators=[
+            validate_file_size,
+            FileExtensionValidator(allowed_extensions=['pdf', 'docx', 'jpg', 'png'])
+        ]
+    )
 
     class Meta:
         db_table = 'formacion_academica'
@@ -46,15 +72,28 @@ class FormacionAcademica(models.Model):
     def __str__(self):
         return f"{self.aspirante} - {self.nivel_academico}"
     
-
 class InformacionAdicional(models.Model):
     aspirante = models.ForeignKey(Aspirante, related_name='informaciones_adicionales', on_delete=models.CASCADE)
     habla_lengua_indigena = models.BooleanField(default=False)
-    talla_playera = models.CharField(max_length=5)
-    talla_pantalon = models.CharField(max_length=5)
-    talla_calzado = models.PositiveIntegerField()
-    banco = models.CharField(max_length=150)
-    cuenta_bancaria = models.CharField(max_length=20)
+    talla_playera = models.CharField(max_length=5)  # Mantiene el CharField como en el formulario
+    talla_pantalon = models.CharField(max_length=5)  # Puede ser un CharField si usas un ChoiceField
+    talla_calzado = models.DecimalField(max_digits=5, decimal_places=1, null=True, blank=True)  # Cambiado a DecimalField
+    banco = models.CharField(max_length=150, choices=[  # Puede usar CharField si usas ChoiceField en el formulario
+        ('BBVA', 'BBVA'),
+        ('Santander', 'Santander'),
+        ('Banorte', 'Banorte'),
+        ('HSBC', 'HSBC'),
+        ('Citibanamex', 'Citibanamex'),
+        ('Scotiabank', 'Scotiabank'),
+        ('Inbursa', 'Inbursa'),
+        ('Bajío', 'Bajío'),
+        ('Monex', 'Monex'),
+        ('BancoAzteca', 'Banco Azteca'),
+        ('Banregio', 'Banregio'),
+        ('Compartamos', 'Compartamos'),
+        ('Otros', 'Otros'),  # Opción adicional
+    ])
+    cuenta_bancaria = models.CharField(max_length=20)  # Mantén CharField para la cuenta bancaria, con validación de solo números
 
     class Meta:
         db_table = 'informacion_adicional'
@@ -98,15 +137,4 @@ class Documentos(models.Model):
 
     def __str__(self):
         return f"{self.aspirante} - Documentos"
-
-class RolAspirante(models.Model):
-    aspirante = models.ForeignKey(Aspirante, related_name='roles', on_delete=models.CASCADE)
-    rol_aplica = models.CharField(max_length=50)  # Ejemplo: 'Educador Comunitario'
-
-    class Meta:
-        db_table = 'rol_aspirante'
-
-    def __str__(self):
-        return f"{self.aspirante} - {self.rol_aplica}"
-"""
 

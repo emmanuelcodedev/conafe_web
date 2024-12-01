@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import RegistroAspiranteForm
-from .models import Aspirante #, FormacionAcademica , InformacionAdicional, Residencia, Participacion, Documentos, RolAspirante #
+from .models import Aspirante , FormacionAcademica , InformacionAdicional, Residencia, Participacion, Documentos
 
 def form_view(request):
     if request.method == 'POST':
         form = RegistroAspiranteForm(request.POST, request.FILES)
         if form.is_valid():
+            
             # Imprimir datos validados
             print(form.cleaned_data)  # Esto te ayudará a ver qué datos se han procesado correctamente
             
@@ -18,34 +19,20 @@ def form_view(request):
                 correo=form.cleaned_data['correo'],
                 telefono=form.cleaned_data['telefono']  # Asegúrate de que esto sea un string
             )
+
             
-            # Mensaje de éxito
-            messages.success(request, 'Aspirante subido al sistema exitosamente.')
+            # Obtén directamente el valor booleano desde cleaned_data
+            habla_lengua_indigena = form.cleaned_data['habla_lengua_indigena']  # Esto ya es True o False gracias al método clean_habla_lengua_indigena
 
-            # Redirigir a la página de confirmación
-            return redirect('confirmacion')  # Aquí rediriges a la vista de confirmación
-        else:
-            print(form.errors)
-
-    else:
-        form = RegistroAspiranteForm()
-
-    return render(request, 'app_form/template_form.html', {'form': form})
-
-
-def confirmacion(request):
-    # Renderiza una página de confirmación con un mensaje adecuado
-    return render(request, 'app_form/confirmacion.html')
-        
-
-"""
+            # Crear la instancia de FormacionAcademica
             FormacionAcademica.objects.create(
-                aspirante=aspirante,
-                nivel_academico=form.cleaned_data['nivel_academico'],
-                certificado_constancia=form.cleaned_data['certificado_constancia']
+                aspirante=aspirante,  # Objeto aspirante ya creado anteriormente
+                nivel_academico=form.cleaned_data['nivel_academico'],  # Tomamos directamente el valor del formulario
+                certificado_constancia=form.cleaned_data['certificado_constancia'],
+                habla_lengua_indigena=habla_lengua_indigena  # Asignamos el valor booleano
             )
 
-            # Crear Información Adicional
+                        # Crear Información Adicional
             InformacionAdicional.objects.create(
                 aspirante=aspirante,
                 habla_lengua_indigena=form.cleaned_data['habla_lengua_indigena'] == 'sí',
@@ -81,22 +68,24 @@ def confirmacion(request):
                 comprobante_domicilio=form.cleaned_data['comprobante_domicilio']
             )
 
-            # Crear Rol Aspirante
-            RolAspirante.objects.create(
-                aspirante=aspirante,
-                rol_aplica=form.cleaned_data['rol_aplica']
-            )
 
             # Mensaje de éxito
             messages.success(request, 'Aspirante subido al sistema exitosamente.')
 
-            # Redirigir a una página de éxito o al mismo formulario
-            return redirect('app_form/mensaje.html')  # Cambia 'nombre_de_la_vista_de_confirmacion' al nombre de tu vista de confirmación o la URL donde quieras redirigir.
+            # Redirigir a la página de confirmación
+            return redirect('confirmacion')  # Aquí rediriges a la vista de confirmación
+        else:
+            print(form.errors)
+
     else:
         form = RegistroAspiranteForm()
 
-    return render(request, 'app_form/template_form.html', {'form': form})  # Cambia 'nombre_de_tu_template.html' por el nombre de tu template
+    return render(request, 'app_form/template_form.html', {'form': form})
+
 
 def confirmacion(request):
-    return render(request, 'confirmacion.html')
-"""
+    # Renderiza una página de confirmación con un mensaje adecuado
+    return render(request, 'app_form/confirmacion.html')
+        
+
+
