@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+import re
+from django import forms
 
 # Función para validar el tamaño del archivo
 def validate_file_size(file):
@@ -8,18 +10,30 @@ def validate_file_size(file):
         raise ValidationError("El archivo es demasiado grande.")
     return file
 
+def validate_phone_number(value):
+    if not re.match(r'^\+?\d+$', value):  # Permitirá números con o sin el signo +
+        raise ValidationError('El número de teléfono solo debe contener números y, opcionalmente, un signo + al inicio.')
+
 class Aspirante(models.Model):
     # Información Personal
     nombre = models.CharField(max_length=150)
     apellido_paterno = models.CharField(max_length=150)
     apellido_materno = models.CharField(max_length=150)
     correo = models.EmailField(max_length=254)
-    telefono = models.CharField(max_length=15)  # Puede usar un formato para validación específica
+    telefono = models.CharField(max_length=15, validators=[validate_phone_number])
 
-    # Método de representación para facilitar la lectura
+    def save(self, *args, **kwargs):
+        # Asegura que solo se guarden números en el campo telefono
+        self.telefono = ''.join(filter(str.isdigit, str(self.telefono)))  # Elimina caracteres no numéricos
+        super(Aspirante, self).save(*args, **kwargs)
+
+    class Meta:
+        db_table = 'aspirante'  # Cambié la tabla a minúsculas
+
     def __str__(self):
         return f"{self.nombre} {self.apellido_paterno} {self.apellido_materno}"
-
+    
+"""
 class FormacionAcademica(models.Model):
     aspirante = models.ForeignKey(Aspirante, related_name='formaciones_academicas', on_delete=models.CASCADE)
     nivel_academico = models.CharField(max_length=150)
@@ -31,6 +45,7 @@ class FormacionAcademica(models.Model):
 
     def __str__(self):
         return f"{self.aspirante} - {self.nivel_academico}"
+    
 
 class InformacionAdicional(models.Model):
     aspirante = models.ForeignKey(Aspirante, related_name='informaciones_adicionales', on_delete=models.CASCADE)
@@ -93,5 +108,5 @@ class RolAspirante(models.Model):
 
     def __str__(self):
         return f"{self.aspirante} - {self.rol_aplica}"
-
+"""
 

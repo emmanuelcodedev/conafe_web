@@ -1,22 +1,44 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import RegistroAspiranteForm
-from .models import Aspirante, FormacionAcademica, InformacionAdicional, Residencia, Participacion, Documentos, RolAspirante
+from .models import Aspirante #, FormacionAcademica , InformacionAdicional, Residencia, Participacion, Documentos, RolAspirante #
 
 def form_view(request):
     if request.method == 'POST':
         form = RegistroAspiranteForm(request.POST, request.FILES)
         if form.is_valid():
+            # Imprimir datos validados
+            print(form.cleaned_data)  # Esto te ayudará a ver qué datos se han procesado correctamente
+            
             # Guardar la información del aspirante
             aspirante = Aspirante.objects.create(
                 nombre=form.cleaned_data['nombre'],
                 apellido_paterno=form.cleaned_data['apellido_paterno'],
                 apellido_materno=form.cleaned_data['apellido_materno'],
                 correo=form.cleaned_data['correo'],
-                telefono=form.cleaned_data['telefono']
+                telefono=form.cleaned_data['telefono']  # Asegúrate de que esto sea un string
             )
+            
+            # Mensaje de éxito
+            messages.success(request, 'Aspirante subido al sistema exitosamente.')
 
-            # Crear Formacion Académica
+            # Redirigir a la página de confirmación
+            return redirect('confirmacion')  # Aquí rediriges a la vista de confirmación
+        else:
+            print(form.errors)
+
+    else:
+        form = RegistroAspiranteForm()
+
+    return render(request, 'app_form/template_form.html', {'form': form})
+
+
+def confirmacion(request):
+    # Renderiza una página de confirmación con un mensaje adecuado
+    return render(request, 'app_form/confirmacion.html')
+        
+
+"""
             FormacionAcademica.objects.create(
                 aspirante=aspirante,
                 nivel_academico=form.cleaned_data['nivel_academico'],
@@ -77,5 +99,4 @@ def form_view(request):
 
 def confirmacion(request):
     return render(request, 'confirmacion.html')
-
-
+"""

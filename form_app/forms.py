@@ -1,4 +1,6 @@
 from django import forms
+from .models import Aspirante
+from .models import validate_phone_number  # Suponiendo que hayas definido este validador
 
 # Lista de estados mexicanos como constante fuera de la clase
 ESTADOS_MEXICO = [
@@ -37,14 +39,29 @@ ESTADOS_MEXICO = [
 ]
 
 # Form principal
-class RegistroAspiranteForm(forms.Form):
-    # Información Personal
-    nombre = forms.CharField(max_length=100, label="Nombre")
-    apellido_paterno = forms.CharField(max_length=100, label="Apellido Paterno")
-    apellido_materno = forms.CharField(max_length=100, label="Apellido Materno")
-    correo = forms.EmailField(label="Correo Electrónico")
-    telefono = forms.CharField(max_length=15, label="Número de Teléfono")
+class RegistroAspiranteForm(forms.ModelForm):
+    class Meta:
+        model = Aspirante
+        fields = ['nombre', 'apellido_paterno', 'apellido_materno', 'correo', 'telefono']
+    
+    telefono = forms.CharField(
+        max_length=15,
+        label="Número de Teléfono",
+        validators=[validate_phone_number]
+    )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            if isinstance(field.widget, forms.widgets.FileInput):
+                field.widget.attrs.update({'class': 'form-control-file'})
+            elif isinstance(field.widget, forms.widgets.RadioSelect):
+                field.widget.attrs.update({'class': 'form-check-input'})
+            else:
+                field.widget.attrs.update({'class': 'form-control'})
+
+
+"""
     # Formación Académica
     nivel_academico = forms.ChoiceField(
         choices=[
@@ -108,16 +125,8 @@ class RegistroAspiranteForm(forms.Form):
         initial='educador_comunitario',
         widget=forms.HiddenInput()  # Campo oculto
     )
+"""
 
-    # Inicializador para agregar clases CSS de Bootstrap
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field in self.fields.values():
-            if isinstance(field.widget, forms.widgets.FileInput):
-                field.widget.attrs.update({'class': 'form-control-file'})
-            elif isinstance(field.widget, forms.widgets.RadioSelect):
-                field.widget.attrs.update({'class': 'form-check-input'})
-            else:
-                field.widget.attrs.update({'class': 'form-control'})
+
 
 
