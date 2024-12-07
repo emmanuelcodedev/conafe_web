@@ -83,14 +83,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': '34.118.149.167',  # IP pública de la base de datos
-        'PORT': '3306',             # Puerto 3307 configurado
+        'PORT': '3306',             # Puerto configurado
         'NAME': 'conafe_motor',
         'USER': 'root',
         'PASSWORD': '1234567890',
     }
 }
-
-
+print("conexion exitosa a google-cloud")
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
