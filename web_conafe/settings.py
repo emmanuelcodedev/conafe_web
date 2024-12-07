@@ -82,13 +82,14 @@ WSGI_APPLICATION = 'web_conafe.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'conafe_motor',  # Nombre de la base de datos
-        'USER': 'root',  # Usuario de MySQL
-        'PASSWORD': '1234567890',  # Contraseña
-        'HOST': '/cloudsql/genuine-grid-444000-r5:northamerica-northeast1:conafe',  # Reemplaza por tu proyecto, región y nombre de la instancia
-        'PORT': '',  # Deja el puerto vacío cuando uses el socket
+        'HOST': '34.118.149.167',  # IP pública de la base de datos
+        'PORT': '3306',             # Puerto 3307 configurado
+        'NAME': 'conafe_motor',
+        'USER': 'root',
+        'PASSWORD': '1234567890',
     }
 }
+
 
 
 # Password validation
