@@ -1,0 +1,87 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{titlesec}
+
+% Configuración de la página
+\geometry{a4paper, margin=1in}
+
+% Definir colores
+\definecolor{blue}{RGB}{0, 102, 204}
+
+% Estilo de sección
+\titleformat{\section}
+{\normalfont\Large\bfseries\color{blue}}
+{}{0em}{}
+
+% Información personal
+\newcommand{\personalinfo}[4]{
+	\begin{center}
+		{\Huge \textbf{#1}} \\
+		\vspace{0.5em}
+		\textbf{Email:} \href{mailto:#2}{#2} \quad
+		\textbf{Teléfono:} #3 \quad
+		\textbf{LinkedIn:} \href{https://www.linkedin.com/in/#4}{#4}
+	\end{center}
+}
+
+\begin{document}
+	
+	% Información personal
+	\personalinfo{Emmanuel CodeDev}{emmanuel@example.com}{+123 456 7890}{emmanuelcodedev}
+	
+	% Sección: Resumen
+	\section*{Resumen}
+	Desarrollador Full Stack con experiencia en Python, JavaScript y tecnologías en la nube como AWS. Apasionado por la creación de soluciones eficientes y el aprendizaje continuo.
+	
+	% Sección: Educación
+	\section*{Educación}
+	\begin{itemize}
+		\item \textbf{Ingeniería en Computación} \\
+		Universidad Ejemplo, Ciudad, País \\
+		2018 - 2023
+	\end{itemize}
+	
+	% Sección: Experiencia Laboral
+	\section*{Experiencia Laboral}
+	\begin{itemize}
+		\item \textbf{Desarrollador Web Full Stack} \\
+		Empresa Tech, Ciudad, País \\
+		2023 - Actualidad \\
+		\begin{itemize}
+			\item Desarrollo de aplicaciones con Node.js, Vue.js y bases de datos SQL/NoSQL.
+			\item Implementación de soluciones escalables en AWS utilizando Lambda y DynamoDB.
+			\item Optimización de rendimiento y seguridad en aplicaciones web.
+		\end{itemize}
+	\end{itemize}
+	
+	% Sección: Habilidades Técnicas
+	\section*{Habilidades Técnicas}
+	\begin{itemize}
+		\item \textbf{Lenguajes:} Python, JavaScript, Java, SQL
+		\item \textbf{Frameworks:} Node.js, Vue.js, Django, Express.js
+		\item \textbf{Bases de Datos:} MySQL, PostgreSQL, MongoDB
+		\item \textbf{Herramientas:} Git, Docker, AWS, Linux
+		\item \textbf{Metodologías:} Agile, Scrum
+	\end{itemize}
+	
+	% Sección: Proyectos
+	\section*{Proyectos}
+	\begin{itemize}
+		\item \textbf{Sistema de Gestión de Tareas} \textit{(Python, Django, PostgreSQL)}
+		\item \textbf{API REST para E-commerce} \textit{(Node.js, Express, MongoDB)}
+		\item \textbf{Dashboard de Datos en AWS} \textit{(Lambda, DynamoDB, S3)}
+	\end{itemize}
+	
+	% Sección: Idiomas
+	\section*{Idiomas}
+	\begin{itemize}
+		\item Español: Nativo
+		\item Inglés: Intermedio (B2)
+	\end{itemize}
+	
+\end{document}
