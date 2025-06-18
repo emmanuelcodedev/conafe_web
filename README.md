@@ -1,6 +1,6 @@
-<<<<<<< HEAD
+
 # conafe_web
-=======
+
 # Proyecto Django - Guía de Instalación y Configuración
 
 Este proyecto está basado en Django y se recomienda usar un entorno virtual para gestionar las dependencias de manera aislada y evitar conflictos con otras bibliotecas o proyectos.
